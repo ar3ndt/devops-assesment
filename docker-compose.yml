@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres:12
+    container_name: bank-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: bdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test -d bdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: bank-app
+    restart: on-failure
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      BANK_POSTGRES_HOST: db:5432
+    #   BANK_POSTGRES_PORT: 5432
+    #   BANK_POSTGRES_USER: test
+    #   BANK_POSTGRES_PASSWORD: test
+    #   BANK_POSTGRES_DB: bdb
+    #   BANK_RUN_MIGRATIONS: "true"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+
+volumes:
+  pgdata:

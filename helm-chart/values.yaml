@@ -1,0 +1,14 @@
+replicaCount: 5
+
+image:
+  repository: ghcr.io/ar3ndt/devops-assesment/bank-api
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nodeSelector:
+  role: api
+
+podAntiAffinity:
+  enabled: true
+
+resources: {}
