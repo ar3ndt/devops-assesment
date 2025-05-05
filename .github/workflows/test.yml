@@ -19,7 +19,7 @@ jobs:
         env:
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
-          POSTGRES_DB: bank
+          POSTGRES_DB: bdb
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -43,9 +43,9 @@ jobs:
           done
 
       - name: Run tests
-        env:
-          BANK_POSTGRES_HOST: localhost:5432
-          BANK_POSTGRES_USER: test
-          BANK_POSTGRES_PASSWORD: test
-          BANK_POSTGRES_DB: bank
+        # env:
+        #   BANK_POSTGRES_HOST: localhost:5432
+        #   BANK_POSTGRES_USER: test
+        #   BANK_POSTGRES_PASSWORD: test
+        #   BANK_POSTGRES_DB: bank
         run: go test -v -cover ./...
