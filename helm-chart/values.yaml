@@ -1,7 +1,7 @@
 replicaCount: 5
 
 image:
-  repository: ghcr.io/ar3ndt/devops-assesment/bank-api
+  repository: ghcr.io/ar3ndt/devops-assesment
   tag: latest
   pullPolicy: IfNotPresent
 
